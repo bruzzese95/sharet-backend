@@ -1,14 +1,17 @@
 from fastapi import FastAPI
 import uvicorn
+from utils import fastapiTagsMetadata
+from shared_resource_api import router as srRouter
 
 
-api = FastAPI()
+mainApi = FastAPI(openapi_tags = fastapiTagsMetadata)
+mainApi.include_router(srRouter)
 
 
-@api.get("/hello-world")
+@mainApi.get("/hello-world")
 def hello_world():
     return "Hello World! - First Commit ;)"
 
 
 if __name__ == "__main__":
-    uvicorn.run(api, host="0.0.0.0", port=8080)
+    uvicorn.run(mainApi, host="0.0.0.0", port=8080)
