@@ -9,6 +9,9 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
+            "env": {
+                "GOOGLE_APPLICATION_CREDENTIALS": "${workspaceFolder}/firebase_service_account.json"
+            },
             "console": "integratedTerminal"
         }
     ]
