@@ -1,16 +1,23 @@
 import uvicorn
-from model import User
-from fastapi import FastAPI, Depends
+from models.user import User
+from fastapi import FastAPI, Depends, APIRouter
 from fastapi_cloudauth.firebase import FirebaseCurrentUser, FirebaseClaims
 from utils import fastapiTagsMetadata
-from shared_resource_api import router as srRouter
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, subqueryload
-from model import base
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from models.models import base
 
 
-mainApi = FastAPI(openapi_tags = fastapiTagsMetadata)
+srRouter = APIRouter(
+    prefix="/shared-resources",
+    tags=["shared-resources"],
+    responses={404: {"description": "Not found"}},
+)
+
+mainApi = FastAPI(title="Shared Resource API", openapi_tags = fastapiTagsMetadata)
 mainApi.include_router(srRouter)
+
 
 db_string = "postgresql+psycopg2://ptjplqubrntdot:869c995e8c02bfda8f71d2c63eb361b105d7766a286ea9c27a871d3851b14c7a@ec2-52-209-185-5.eu-west-1.compute.amazonaws.com:5432/d1fsbmu87r2djb"
 db = create_engine(db_string)
