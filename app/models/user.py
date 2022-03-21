@@ -9,6 +9,7 @@ class User(Base):
     first_name = Column(String(256), nullable=False)
     surname = Column(String(256), nullable=True)
     email = Column(String, index=True, nullable=True)
+    
     '''
     resources = relationship(
         "Resource",

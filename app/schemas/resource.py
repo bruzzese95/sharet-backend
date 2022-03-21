@@ -9,6 +9,7 @@ class ResourceBase(BaseModel):
 
 class ResourceCreate(ResourceBase):
     name: str
+    '''owner_id: int'''
 
 
 class ResourceUpdate(ResourceBase):
@@ -18,6 +19,7 @@ class ResourceUpdate(ResourceBase):
 # Properties shared by models stored in DB
 class ResourceInDBBase(ResourceBase):
     id: int
+    '''owner_id: int'''
 
     class Config:
         orm_mode = True
