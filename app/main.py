@@ -18,11 +18,14 @@ srRouter = APIRouter(
 mainApi = FastAPI(title="Shared Resource API", openapi_tags = fastapiTagsMetadata)
 mainApi.include_router(srRouter)
 
-
+'''
 db_string = "postgresql+psycopg2://ptjplqubrntdot:869c995e8c02bfda8f71d2c63eb361b105d7766a286ea9c27a871d3851b14c7a@ec2-52-209-185-5.eu-west-1.compute.amazonaws.com:5432/d1fsbmu87r2djb"
 db = create_engine(db_string)
 Session = sessionmaker(db)
 base.metadata.create_all(db)
+
+'''
+
 
 @mainApi.get("/hello-world")
 def hello_world():

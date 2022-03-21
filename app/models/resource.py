@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from db.base_class import Base
+from sharetbackend.app.db.base_class import Base
 
 
 class Resource(Base):
