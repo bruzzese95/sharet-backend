@@ -4,14 +4,14 @@ from pydantic import BaseModel, EmailStr
 
 
 class UserBase(BaseModel):
-    first_name: Optional[str]
+    first_name: Optional[str] = None
     surname: Optional[str]
-    email: Optional[EmailStr] = None
+    email: Optional[str]
 
 
 # Properties to receive via API on creation
 class UserCreate(UserBase):
-    email: EmailStr
+    name: str
 
 
 # Properties to receive via API on update
