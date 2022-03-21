@@ -27,13 +27,14 @@ def hello_world():
     return "Hello World! - First Commit ;)"
 
 
-get_current_user = FirebaseCurrentUser(project_id = "sharet-a77e0")
 '''An api to get current user data.
 Args:
 Valid ID Token
 Returns:
 A json response containing the user id of the current user
 '''
+'''
+get_current_user = FirebaseCurrentUser(project_id = "sharet-a77e0")
 @mainApi.get("/user/")
 def get_user(current_user: FirebaseClaims = Depends(get_current_user)):
     # ID token is valid and getting user info from ID token
@@ -46,7 +47,7 @@ def get_id(id: int):
     user = session.query(User).filter(User.id == id).first()
     session.close()
     return user
-
+'''
 
 @mainApi.get("/resource/{resource_id}", status_code=200, response_model=Resource)
 def fetch_resource(
