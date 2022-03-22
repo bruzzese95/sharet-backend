@@ -1,7 +1,7 @@
 from importlib.resources import Resource
 import uvicorn
 from app.models.user import User
-from fastapi import FastAPI, APIRouter, Query, HTTPException, Request, Depends
+from fastapi import FastAPI, APIRouter, Query, HTTPException, Request, Depends, Response
 from fastapi_cloudauth.firebase import FirebaseCurrentUser, FirebaseClaims
 from app.schemas.resource import ResourceCreate
 from app.utils import fastapiTagsMetadata
@@ -43,6 +43,47 @@ def fetch_resource(
 
     return result
 
+@mainApi.put("/resource/{resource_id}", status_code=200, response_model=str)
+def delete_resource(
+    *, resource_id: int, db: Session = Depends(deps.get_db)
+) -> Any:
+    """
+    Delete a resource in the database.
+    """
+    result = crud.resource.get(db=db, id=resource_id)
+    
+    if not result:
+        # the exception is raised, not returned - you will get a validation
+        # error otherwise.
+        raise HTTPException(
+            status_code=404, detail=f"Resource with ID {resource_id} not found"
+        )
+    else:
+        db.delete(result)
+        db.commit()
+        return f"Resource with ID {resource_id} has been deleted."
+
+
+@mainApi.put("/user/{user_id}", status_code=200, response_model=str)
+def delete_user(
+    *, user_id: int, db: Session = Depends(deps.get_db)
+) -> Any:
+    """
+    Delete a resource in the database.
+    """
+    result = crud.user.get(db=db, id=user_id)
+    
+    if not result:
+        # the exception is raised, not returned - you will get a validation
+        # error otherwise.
+        raise HTTPException(
+            status_code=404, detail=f"User with ID {user_id} not found"
+        )
+    else:
+        db.delete(result)
+        db.commit()
+        return f"User with ID {user_id} has been deleted."
+
 
 @mainApi.get("/user/{user_id}", status_code=200, response_model=User)
 def fetch_user(
@@ -51,7 +92,7 @@ def fetch_user(
     db: Session = Depends(deps.get_db),
 ) -> Any:
     """
-    Fetch a single recipe by ID
+    Fetch a single user by ID
     """
     result = crud.user.get(db=db, id=user_id)
     if not result:
@@ -64,18 +105,6 @@ def fetch_user(
     return result
 
 
-@mainApi.post("/resource/", status_code=201, response_model=Resource)
-def create_resource(
-    *, db: Session = Depends(deps.get_db), resource_in: ResourceCreate
-) -> dict:
-    """
-    Create a new resource in the database.
-    """
-    resource = crud.resource.create(db=db, obj_in=resource_in)
-
-    return resource
-
-
 @mainApi.post("/user/", status_code=201, response_model=User)
 def create_user(
     *, db: Session = Depends(deps.get_db), user_in: UserCreate
@@ -86,6 +115,18 @@ def create_user(
     user = crud.user.create(db=db, obj_in=user_in)
 
     return user
+
+@mainApi.post("/resource/", status_code=201, response_model=Resource)
+def create_resource(
+    *, resource_in: ResourceCreate, db: Session = Depends(deps.get_db)
+) -> dict:
+    """
+    Create a new resource in the database.
+    """
+    resource = crud.resource.create(db=db, obj_in=resource_in)
+
+    return resource
+
 
 
 
