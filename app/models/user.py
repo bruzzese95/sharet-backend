@@ -10,11 +10,11 @@ class User(Base):
     surname = Column(String(256), nullable=True)
     email = Column(String, index=True, nullable=True)
     
-    '''
+    
     resources = relationship(
         "Resource",
         cascade="all,delete-orphan",
         back_populates="owner",
         uselist=True,
     )
-    '''
+    

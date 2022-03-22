@@ -8,8 +8,8 @@ class Resource(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(256), nullable=False)
 
-    '''
-    owner_id = Column(Integer,ForeignKey("user.id"), nullable=True)
+    
+    owner_id = Column(Integer,ForeignKey("user.id"), nullable=False)
     owner = relationship("User", back_populates="resources")
     
-    users = Column(String(256), nullable=True)'''
+    '''users = Column(String(256), nullable=True)'''

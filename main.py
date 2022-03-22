@@ -43,6 +43,25 @@ def fetch_resource(
 
     return result
 
+@mainApi.get("/user/{user_id}", status_code=200, response_model=User)
+def fetch_user(
+    *,
+    user_id: int,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """
+    Fetch a single user by ID
+    """
+    result = crud.user.get(db=db, id=user_id)
+    if not result:
+        # the exception is raised, not returned - you will get a validation
+        # error otherwise.
+        raise HTTPException(
+            status_code=404, detail=f"User with ID {user_id} not found"
+        )
+
+    return result
+
 @mainApi.put("/resource/{resource_id}", status_code=200, response_model=str)
 def delete_resource(
     *, resource_id: int, db: Session = Depends(deps.get_db)
@@ -85,24 +104,6 @@ def delete_user(
         return f"User with ID {user_id} has been deleted."
 
 
-@mainApi.get("/user/{user_id}", status_code=200, response_model=User)
-def fetch_user(
-    *,
-    user_id: int,
-    db: Session = Depends(deps.get_db),
-) -> Any:
-    """
-    Fetch a single user by ID
-    """
-    result = crud.user.get(db=db, id=user_id)
-    if not result:
-        # the exception is raised, not returned - you will get a validation
-        # error otherwise.
-        raise HTTPException(
-            status_code=404, detail=f"User with ID {user_id} not found"
-        )
-
-    return result
 
 
 @mainApi.post("/user/", status_code=201, response_model=User)
