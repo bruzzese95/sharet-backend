@@ -62,7 +62,7 @@ def fetch_user(
 
     return result
 
-@mainApi.put("/resource/{resource_id}", status_code=200, response_model=str)
+@mainApi.delete("/resource/{resource_id}", status_code=200, response_model=str)
 def delete_resource(
     *, resource_id: int, db: Session = Depends(deps.get_db)
 ) -> Any:
@@ -83,7 +83,7 @@ def delete_resource(
         return f"Resource with ID {resource_id} has been deleted."
 
 
-@mainApi.put("/user/{user_id}", status_code=200, response_model=str)
+@mainApi.delete("/user/{user_id}", status_code=200, response_model=str)
 def delete_user(
     *, user_id: int, db: Session = Depends(deps.get_db)
 ) -> Any:
