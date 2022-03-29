@@ -1,6 +1,7 @@
+from typing import List
 from fastapi import APIRouter
 
-from model import SharedResource
+from model import SharedResource, SharedResourceList
 
 fake_db = [
     SharedResource(id=1, name="Grande Punto di Antonio"),
@@ -22,3 +23,8 @@ def get_shared_resources_res_id(id: int) -> SharedResource:
             return r
 
     return SharedResource()
+
+@router.get("/", summary="Retrive all the shared resources")
+def get_shared_resources() -> SharedResourceList:
+    list = SharedResourceList(sharedResourceDtoList = fake_db)
+    return list
