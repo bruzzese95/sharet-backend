@@ -23,6 +23,16 @@ srRouter = APIRouter(
 mainApi = FastAPI(title="Shared Resource API", openapi_tags = fastapiTagsMetadata)
 
 
+@mainApi.get("/resource/all", status_code=200, response_model=ResourceSearchResults)
+def get_all_resources(
+    *, db: Session = Depends(deps.get_db,)
+) -> dict:
+    """
+    Returns all resources stored in the database
+    """
+    resources = crud.resource.getAll(db=db)
+    return {"results": list(resources)}
+
 
 @mainApi.get("/resource/{resource_id}", status_code=200, response_model=Resource)
 def fetch_resource(
