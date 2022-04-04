@@ -37,4 +37,4 @@ class ResourceInDB(ResourceInDBBase):
 
 
 class ResourceSearchResults(BaseModel):
-    results: Sequence[Resource]
+    sharedResourceDtoList: Sequence[Resource]

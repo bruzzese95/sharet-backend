@@ -31,7 +31,7 @@ def get_all_resources(
     Returns all resources stored in the database
     """
     resources = crud.resource.getAll(db=db)
-    return {"results": list(resources)}
+    return {"sharedResourceDtoList": list(resources)}
 
 
 @mainApi.get("/resource/{resource_id}", status_code=200, response_model=Resource)
