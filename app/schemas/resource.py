@@ -4,13 +4,15 @@ from typing import Sequence
 
 
 class ResourceBase(BaseModel):
+    id: int
     name: str
-    owner_id: int
+    owner_id: str
 
 
 class ResourceCreate(ResourceBase):
+    id: int
     name: str
-    owner_id: int
+    owner_id: str
 
 
 class ResourceUpdate(ResourceBase):
@@ -20,7 +22,8 @@ class ResourceUpdate(ResourceBase):
 # Properties shared by models stored in DB
 class ResourceInDBBase(ResourceBase):
     id: int
-    owner_id: int
+    name: str
+    owner_id: str
 
     class Config:
         orm_mode = True

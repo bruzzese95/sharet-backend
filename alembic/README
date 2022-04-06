@@ -1,1 +1,2 @@
-Generic single-database configuration.
+1. alembic revision --autogenerate -m "Added account table"
+2. alembic upgrade head

@@ -23,6 +23,21 @@ srRouter = APIRouter(
 mainApi = FastAPI(title="Shared Resource API", openapi_tags = fastapiTagsMetadata)
 
 
+
+get_current_user = FirebaseCurrentUser(project_id = "sharet-a77e0")
+'''An api to get current user data.
+Args:
+Valid ID Token
+Returns:
+A json response containing the user id of the current user
+'''
+
+@mainApi.get("/user/firebase")
+def get_user(current_user: FirebaseClaims = Depends(get_current_user)):
+    # ID token is valid and getting user info from ID token
+    return {"id": current_user.user_id}
+
+
 @mainApi.get("/resource/all", status_code=200, response_model=ResourceSearchResults)
 def get_all_resources(
     *, db: Session = Depends(deps.get_db,)
@@ -31,6 +46,19 @@ def get_all_resources(
     Returns all resources stored in the database
     """
     resources = crud.resource.getAll(db=db)
+    return {"sharedResourceDtoList": list(resources)}
+
+
+@mainApi.get("/resource/{user_id}", status_code=200, response_model=ResourceSearchResults)
+def get_resource_to_user(
+    *, 
+    user_id: str,
+    db: Session = Depends(deps.get_db,)
+) -> dict:
+    """
+    Returns all resources stored in the database associated to the input user
+    """
+    resources = crud.resource.getForUser(db=db, id=user_id)
     return {"sharedResourceDtoList": list(resources)}
 
 
