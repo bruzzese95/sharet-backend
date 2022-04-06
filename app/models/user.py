@@ -19,3 +19,9 @@ class User(Base):
         uselist=True,
     )
     
+    reservations = relationship(
+        "Reservation",
+        cascade="all,delete-orphan",
+        back_populates="owner",
+        uselist=True
+    )

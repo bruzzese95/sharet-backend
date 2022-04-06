@@ -1,15 +1,16 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+from app.db.base_class import Base
 
 
-'''
-TO DO implement Reservation table
+class Reservation(Base):
+    id = Column(Integer, primary_key=True, index=True)
+    idResource = Column(Integer, ForeignKey("resource.id"), nullable=False)
+    idOwner = Column(String, ForeignKey("user.idToken"), nullable=False)
+    name = Column(String, nullable=False)
+    startTime = Column(String, nullable=False)
+    endTime = Column(String, nullable=False)
 
-class Reservation(base):
-    __tablename__ = "reservation"
-
-    idReservation = Column(Integer, Sequence("reservation_id_seq"), primary_key=True, unique=True)
-    idResource = Column(Integer)
-    owner = Column(Integer)
-    datetime = Column(Integer)
-    timelenght = Column(Integer)
-
-    '''
+    resource = relationship("Resource", back_populates="reservations")
+    owner = relationship("User", back_populates="reservations")

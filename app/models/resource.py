@@ -11,3 +11,10 @@ class Resource(Base):
     owner = relationship("User", back_populates="resources")
     
     '''users = Column(String(256), nullable=True)'''
+
+    reservations = relationship(
+        "Reservation",
+        cascade="all,delete-orphan",
+        back_populates="resource",
+        uselist=True
+    )

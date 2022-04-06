@@ -10,6 +10,7 @@ from typing import Optional, Any
 from pathlib import Path
 from app.schemas.resource import ResourceSearchResults, Resource, ResourceCreate
 from app.schemas.user import User, UserCreate
+from app.schemas.reservation import ReservationSearchResults, Reservation, ReservationCreate
 import app.deps as deps
 import app.crud as crud
 
@@ -143,6 +144,17 @@ def delete_user(
 
 
 
+
+@mainApi.post("/reservation/", status_code=201, response_model=Reservation)
+def create_reservation(
+    *, db: Session = Depends(deps.get_db), reservation_in: ReservationCreate
+) -> dict:
+    """
+    Create a new reservation in the database.
+    """
+    reservation = crud.reservation.create(db=db, obj_in=reservation_in)
+
+    return reservation
 
 @mainApi.post("/user/", status_code=201, response_model=User)
 def create_user(
