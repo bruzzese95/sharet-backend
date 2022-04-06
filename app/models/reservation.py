@@ -9,6 +9,7 @@ class Reservation(Base):
     idResource = Column(Integer, ForeignKey("resource.id"), nullable=False)
     idOwner = Column(String, ForeignKey("user.idToken"), nullable=False)
     name = Column(String, nullable=False)
+    date = Column(String, nullable=False)
     startTime = Column(String, nullable=False)
     endTime = Column(String, nullable=False)
 

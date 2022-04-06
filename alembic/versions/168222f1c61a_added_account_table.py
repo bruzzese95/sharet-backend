@@ -1,8 +1,8 @@
 """Added account table
 
-Revision ID: 296dd4f08eeb
+Revision ID: 168222f1c61a
 Revises: 
-Create Date: 2022-04-06 21:36:12.487927
+Create Date: 2022-04-06 23:40:53.233187
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '296dd4f08eeb'
+revision = '168222f1c61a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,6 +37,7 @@ def upgrade():
     sa.Column('idResource', sa.Integer(), nullable=False),
     sa.Column('idOwner', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
+    sa.Column('date', sa.String(), nullable=False),
     sa.Column('startTime', sa.String(), nullable=False),
     sa.Column('endTime', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['idOwner'], ['user.idToken'], ),

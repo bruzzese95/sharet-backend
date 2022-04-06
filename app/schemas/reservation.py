@@ -8,6 +8,7 @@ class ReservationBase(BaseModel):
     idResource: int
     idOwner: str
     name: str
+    date: str
     startTime: str
     endTime: str
 
@@ -17,6 +18,7 @@ class ReservationCreate(ReservationBase):
     idResource: int
     idOwner: str
     name: str
+    date: str
     startTime: str
     endTime: str
 
@@ -31,6 +33,7 @@ class ReservationInDBBase(ReservationBase):
     idResource: int
     idOwner: str
     name: str
+    date: str
     startTime: str
     endTime: str
 
