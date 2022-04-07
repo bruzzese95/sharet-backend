@@ -1,4 +1,5 @@
 from importlib.resources import Resource
+from tomlkit import date
 import uvicorn
 from app.models.user import User
 from fastapi import FastAPI, APIRouter, Query, HTTPException, Request, Depends, Response
@@ -63,17 +64,18 @@ def get_resource_to_user(
     return {"sharedResourceDtoList": list(resources)}
 
 
-@mainApi.get("/reservation/{user_id}/{resource_id}", status_code=200, response_model=ReservationSearchResults)
+@mainApi.get("/reservation/{user_id}/{resource_id}/{date}", status_code=200, response_model=ReservationSearchResults)
 def get_reservation_to_user(
     *, 
     user_id: str,
     resource_id: int,
+    date: str,
     db: Session = Depends(deps.get_db,)
 ) -> dict:
     """
     Returns all reservations stored in the database associated to the input user
     """
-    reservations = crud.reservation.getReservationForUser(db=db, idUser=user_id, idResource=resource_id)
+    reservations = crud.reservation.getReservationForUser(db=db, idUser=user_id, idResource=resource_id, date=date)
     return {"reservationDtoList": list(reservations)}
 
 
