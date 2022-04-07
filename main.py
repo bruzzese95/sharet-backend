@@ -138,6 +138,28 @@ def delete_resource(
         return f"Resource with ID {resource_id} has been deleted."
 
 
+@mainApi.delete("/reservation/{reservation_id}", status_code=200, response_model=str)
+def delete_reservation(
+    *, reservation_id: int, db: Session = Depends(deps.get_db)
+) -> Any:
+    """
+    Delete a reservation in the database.
+    """
+    result = crud.reservation.get(db=db, id=reservation_id)
+    
+    if not result:
+        # the exception is raised, not returned - you will get a validation
+        # error otherwise.
+        raise HTTPException(
+            status_code=404, detail=f"Resource with ID {reservation_id} not found"
+        )
+    else:
+        db.delete(result)
+        db.commit()
+        return f"Resource with ID {reservation_id} has been deleted."
+
+
+
 @mainApi.delete("/user/{user_id}", status_code=200, response_model=str)
 def delete_user(
     *, user_id: int, db: Session = Depends(deps.get_db)
