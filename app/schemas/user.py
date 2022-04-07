@@ -6,9 +6,7 @@ from pydantic import BaseModel, EmailStr
 class UserBase(BaseModel):
     idToken: str
     name: str
-    '''first_name: Optional[str] = None
-    surname: Optional[str]
-    email: Optional[EmailStr]'''
+    email: str
 
 
 # Properties to receive via API on creation

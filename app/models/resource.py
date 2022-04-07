@@ -9,8 +9,6 @@ class Resource(Base):
     name = Column(String(256), nullable=False)    
     owner_id = Column(String,ForeignKey("user.idToken"), nullable=False)
     owner = relationship("User", back_populates="resources")
-    
-    '''users = Column(String(256), nullable=True)'''
 
     reservations = relationship(
         "Reservation",
