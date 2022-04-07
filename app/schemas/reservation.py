@@ -52,4 +52,4 @@ class ReservationInDB(ReservationInDBBase):
 
 
 class ReservationSearchResults(BaseModel):
-    sharedResourceDtoList: Sequence[Reservation]
+    reservationDtoList: Sequence[Reservation]

@@ -59,8 +59,23 @@ def get_resource_to_user(
     """
     Returns all resources stored in the database associated to the input user
     """
-    resources = crud.resource.getForUser(db=db, id=user_id)
+    resources = crud.resource.getResourceForUser(db=db, id=user_id)
     return {"sharedResourceDtoList": list(resources)}
+
+
+@mainApi.get("/reservation/{user_id}/{resource_id}", status_code=200, response_model=ReservationSearchResults)
+def get_reservation_to_user(
+    *, 
+    user_id: str,
+    resource_id: int,
+    db: Session = Depends(deps.get_db,)
+) -> dict:
+    """
+    Returns all reservations stored in the database associated to the input user
+    """
+    reservations = crud.reservation.getReservationForUser(db=db, idUser=user_id, idResource=resource_id)
+    return {"reservationDtoList": list(reservations)}
+
 
 
 @mainApi.get("/resource/{resource_id}", status_code=200, response_model=Resource)

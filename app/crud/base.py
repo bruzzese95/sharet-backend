@@ -24,8 +24,11 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def get(self, db: Session, id: Any) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
 
-    def getForUser(self, db: Session, id: Any) -> Optional[ModelType]:
+    def getResourceForUser(self, db: Session, id: Any) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.owner_id == id).all()
+
+    def getReservationForUser(self, db: Session, idUser: Any, idResource: Any) -> Optional[ModelType]:
+        return db.query(self.model).filter(self.model.idOwner == idUser).filter(self.model.idResource == idResource).all()
 
     def getAll(self, db: Session) -> List[ModelType]:
         return db.query(self.model).all()
