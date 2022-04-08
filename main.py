@@ -9,8 +9,8 @@ from app.utils import fastapiTagsMetadata
 from sqlalchemy.orm import Session
 from typing import Optional, Any
 from pathlib import Path
-from app.schemas.resource import ResourceSearchResults, Resource, ResourceCreate
-from app.schemas.user import User, UserCreate
+from app.schemas.resource import ResourceSearchResults, Resource, ResourceCreate, ResourceUpdate
+from app.schemas.user import User, UserCreate, UserUpdate
 from app.schemas.reservation import ReservationSearchResults, Reservation, ReservationCreate
 import app.deps as deps
 import app.crud as crud
@@ -215,6 +215,17 @@ def create_resource(
     resource = crud.resource.create(db=db, obj_in=resource_in)
 
     return resource
+
+@mainApi.put("/user/", status_code=201, response_model=User)
+def update_user(
+    db: Session = Depends(deps.get_db), *, user: User
+) -> dict:
+    """
+    Update a user in the database.
+    """
+    user = crud.user.update_user(db=db, user=user)
+
+    return user
 
 
 

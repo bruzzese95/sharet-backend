@@ -22,4 +22,21 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
 
+    def update_user(self, *, db: Session, user: User):
+
+        # get the existing data
+        db_user = db.query(User).filter(User.idToken == user.idToken).one_or_none()
+        if db_user is None:
+            return None
+
+        # Update model class variable from requested fields 
+        for var, value in vars(user).items():
+            setattr(db_user, var, value) if value else None
+
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+
+
 user = CRUDUser(User)
