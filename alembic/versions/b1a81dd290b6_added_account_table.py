@@ -1,8 +1,8 @@
 """Added account table
 
-Revision ID: a6f30558522c
+Revision ID: b1a81dd290b6
 Revises: 
-Create Date: 2022-04-08 16:04:44.712705
+Create Date: 2022-04-08 17:34:57.198537
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a6f30558522c'
+revision = 'b1a81dd290b6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,6 @@ def upgrade():
     sa.Column('idToken', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
-    sa.Column('shared_resources', sa.ARRAY(sa.Integer()), nullable=True),
     sa.PrimaryKeyConstraint('idToken')
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=False)

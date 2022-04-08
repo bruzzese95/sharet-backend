@@ -10,7 +10,6 @@ class User(Base):
     idToken = Column(String, primary_key=True, index=True)
     name = Column(String, nullable=False)
     email = Column(String, index=True, nullable=False)
-    shared_resources = Column(ARRAY(Integer), nullable=True)
 
     
     
