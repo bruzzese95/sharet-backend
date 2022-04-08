@@ -12,6 +12,7 @@ from pathlib import Path
 from app.schemas.resource import ResourceSearchResults, Resource, ResourceCreate, ResourceUpdate
 from app.schemas.user import User, UserCreate, UserUpdate
 from app.schemas.reservation import ReservationSearchResults, Reservation, ReservationCreate
+from app.schemas.user_and_resource import UserAndResource, UserAndResourceCreate, UserAndResourceSearchResults
 import app.deps as deps
 import app.crud as crud
 
@@ -204,6 +205,19 @@ def create_user(
     user = crud.user.create(db=db, obj_in=user_in)
 
     return user
+
+
+@mainApi.post("/userandresource/", status_code=201, response_model=UserAndResource)
+def create_user_and_resource(
+    *, db: Session = Depends(deps.get_db), user_in: UserAndResourceCreate
+) -> dict:
+    """
+    Create a new resource in the database.
+    """
+    user_and_resource = crud.user_and_resource.create(db=db, obj_in=user_in)
+
+    return user_and_resource
+
 
 @mainApi.post("/resource/", status_code=201, response_model=Resource)
 def create_resource(

@@ -6,13 +6,11 @@ from typing import Sequence
 class ResourceBase(BaseModel):
     id: int
     name: str
-    owner_id: str
 
 
 class ResourceCreate(ResourceBase):
     id: int
     name: str
-    owner_id: str
 
 
 class ResourceUpdate(ResourceBase):
@@ -23,7 +21,6 @@ class ResourceUpdate(ResourceBase):
 class ResourceInDBBase(ResourceBase):
     id: int
     name: str
-    owner_id: str
 
     class Config:
         orm_mode = True
