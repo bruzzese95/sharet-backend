@@ -65,7 +65,7 @@ def get_resource_to_user(
     return {"userAndResourceDtoList": list(userandresource)}
     
 
-@mainApi.get("user/name/{name}", status_code=200, response_model=User)
+@mainApi.get("/user/name/{name}", status_code=200, response_model=User)
 def get_user_with_name(
     *, 
     name: str,
@@ -78,7 +78,7 @@ def get_user_with_name(
     return user
 
 
-@mainApi.get("user/id/{idUser}", status_code=200, response_model=User)
+@mainApi.get("/iduser/{idUser}", status_code=200, response_model=User)
 def get_user_with_idUser(
     *, 
     idUser: int,
@@ -87,11 +87,11 @@ def get_user_with_idUser(
     """
     Returns all resources stored in the database associated to the input user
     """
-    user = crud.user.get(db=db, idUser=idUser)
+    user = crud.user.getWithIdUser(db=db, idUser=idUser)
     return user
 
 
-@mainApi.get("user/email/{email}", status_code=200, response_model=User)
+@mainApi.get("/user/email/{email}", status_code=200, response_model=User)
 def get_user_with_email(
     *, 
     email: str,
