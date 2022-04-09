@@ -1,8 +1,8 @@
 """Added account table
 
-Revision ID: 488177710689
+Revision ID: 74a29d8315ba
 Revises: 
-Create Date: 2022-04-08 21:07:07.888573
+Create Date: 2022-04-09 22:08:08.333304
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '488177710689'
+revision = '74a29d8315ba'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,12 +25,14 @@ def upgrade():
     )
     op.create_table('user',
     sa.Column('idToken', sa.String(), nullable=False),
+    sa.Column('idUser', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('idToken')
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=False)
     op.create_index(op.f('ix_user_idToken'), 'user', ['idToken'], unique=False)
+    op.create_index(op.f('ix_user_idUser'), 'user', ['idUser'], unique=False)
     op.create_table('reservation',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('idResource', sa.Integer(), nullable=False),
@@ -62,6 +64,7 @@ def downgrade():
     op.drop_table('user_and_resource')
     op.drop_index(op.f('ix_reservation_id'), table_name='reservation')
     op.drop_table('reservation')
+    op.drop_index(op.f('ix_user_idUser'), table_name='user')
     op.drop_index(op.f('ix_user_idToken'), table_name='user')
     op.drop_index(op.f('ix_user_email'), table_name='user')
     op.drop_table('user')

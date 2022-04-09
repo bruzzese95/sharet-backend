@@ -7,6 +7,7 @@ from typing import Sequence
 
 class UserBase(BaseModel):
     idToken: str
+    idUser: int
     name: str
     email: str
 

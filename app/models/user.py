@@ -8,6 +8,7 @@ from app.db.base_class import Base
 
 class User(Base):
     idToken = Column(String, primary_key=True, index=True)
+    idUser = Column(Integer, nullable=False, index=True)
     name = Column(String, nullable=False)
     email = Column(String, index=True, nullable=False)
     

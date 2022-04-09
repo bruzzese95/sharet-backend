@@ -78,6 +78,19 @@ def get_user_with_name(
     return user
 
 
+@mainApi.get("user/id/{idUser}", status_code=200, response_model=User)
+def get_user_with_idUser(
+    *, 
+    idUser: str,
+    db: Session = Depends(deps.get_db,)
+) -> dict:
+    """
+    Returns all resources stored in the database associated to the input user
+    """
+    user = crud.user.get(db=db, idUser=idUser)
+    return user
+
+
 @mainApi.get("user/email/{email}", status_code=200, response_model=User)
 def get_user_with_email(
     *, 
