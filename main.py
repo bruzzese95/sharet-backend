@@ -52,7 +52,7 @@ def get_all_resources(
     return {"sharedResourceDtoList": list(resources)}
 
 
-@mainApi.get("/resource/{user_id}", status_code=200, response_model=ResourceSearchResults)
+@mainApi.get("/resource/{user_id}", status_code=200, response_model=UserAndResourceSearchResults)
 def get_resource_to_user(
     *, 
     user_id: str,
@@ -61,8 +61,12 @@ def get_resource_to_user(
     """
     Returns all resources stored in the database associated to the input user
     """
-    resources = crud.resource.getResourceForUser(db=db, id=user_id)
-    return {"sharedResourceDtoList": list(resources)}
+    userandresource = crud.user_and_resource.getResourcesForUser(db=db, id=user_id)
+    return {"userAndResourceDtoList": list(userandresource)}
+    
+
+
+
 
 
 @mainApi.get("/reservation/{resource_id}/{date}", status_code=200, response_model=ReservationSearchResults)
@@ -80,7 +84,7 @@ def get_reservation_to_user(
 
 
 
-@mainApi.get("/resource/{resource_id}", status_code=200, response_model=Resource)
+@mainApi.get("/resource/get/{resource_id}", status_code=200, response_model=Resource)
 def fetch_resource(
     *,
     resource_id: int,
