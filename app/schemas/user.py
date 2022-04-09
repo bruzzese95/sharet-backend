@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
+from typing import Sequence
+
 
 class UserBase(BaseModel):
     idToken: str
@@ -29,3 +31,7 @@ class UserInDBBase(UserBase):
 # Additional properties to return via API
 class User(UserInDBBase):
     pass
+
+
+class UserSearchResults(BaseModel):
+    userDtoList: Sequence[User]

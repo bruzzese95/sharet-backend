@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from typing import Optional, Any
 from pathlib import Path
 from app.schemas.resource import ResourceSearchResults, Resource, ResourceCreate, ResourceUpdate
-from app.schemas.user import User, UserCreate, UserUpdate
+from app.schemas.user import User, UserCreate, UserUpdate, UserSearchResults
 from app.schemas.reservation import ReservationSearchResults, Reservation, ReservationCreate
 from app.schemas.user_and_resource import UserAndResource, UserAndResourceCreate, UserAndResourceSearchResults
 import app.deps as deps
@@ -65,7 +65,30 @@ def get_resource_to_user(
     return {"userAndResourceDtoList": list(userandresource)}
     
 
+@mainApi.get("user/name/{name}", status_code=200, response_model=User)
+def get_user_with_name(
+    *, 
+    name: str,
+    db: Session = Depends(deps.get_db,)
+) -> dict:
+    """
+    Returns all resources stored in the database associated to the input user
+    """
+    user = crud.user.get(db=db, name=name)
+    return user
 
+
+@mainApi.get("user/email/{email}", status_code=200, response_model=User)
+def get_user_with_email(
+    *, 
+    email: str,
+    db: Session = Depends(deps.get_db,)
+) -> dict:
+    """
+    Returns all resources stored in the database associated to the input user
+    """
+    user = crud.user.get(db=db, email=email)
+    return user
 
 
 
