@@ -81,7 +81,7 @@ def get_user_with_name(
 @mainApi.get("user/id/{idUser}", status_code=200, response_model=User)
 def get_user_with_idUser(
     *, 
-    idUser: str,
+    idUser: int,
     db: Session = Depends(deps.get_db,)
 ) -> dict:
     """
