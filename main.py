@@ -52,7 +52,7 @@ def get_all_resources(
     return {"sharedResourceDtoList": list(resources)}
 
 
-@mainApi.get("user/token/{idToke}", status_code=200, response_model=User)
+@mainApi.get("/user/token/{idToke}", status_code=200, response_model=User)
 def get_user_with_idtoken(
     *, 
     idToken: str,
