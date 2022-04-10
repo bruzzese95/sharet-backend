@@ -52,6 +52,18 @@ def get_all_resources(
     return {"sharedResourceDtoList": list(resources)}
 
 
+@mainApi.get("user/token/{idToke}", status_code=200, response_model=User)
+def get_user_with_idtoken(
+    *, 
+    idToken: str,
+    db: Session = Depends(deps.get_db,)
+) -> dict:
+    """
+    Returns user with the id token
+    """
+    user = crud.user.getUserWithIdToken(db=db, idToken=idToken)
+    return user
+
 @mainApi.get("/resource/{user_id}", status_code=200, response_model=UserAndResourceSearchResults)
 def get_resource_to_user(
     *, 

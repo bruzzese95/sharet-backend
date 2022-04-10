@@ -30,6 +30,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def getResourcesForUser(self, db: Session, id: Any) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.idUser == id).all()
 
+    def getUserWithIdToken(self, db: Session, idToken: Any) -> Optional[ModelType]:
+        return db.query(self.model).filter(self.model.idToken == idToken).all()
+
     def getReservationForUser(self, db: Session, idResource: Any, date: Any) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.idResource == idResource).filter(self.model.date == date).all()
 
